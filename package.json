@@ -5,6 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon server.js",
+    "migrate:up": "db-migrate up --config ./config/db-migrate/dev.json",
+    "migrate:down": "db-migrate down --config ./config/db-migrate/dev.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,6 +21,8 @@
   },
   "homepage": "https://github.com/stevenjchang/roommates_international_server#readme",
   "dependencies": {
+    "db-migrate": "^0.11.11",
+    "db-migrate-pg": "^1.2.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "pg": "^8.4.1"

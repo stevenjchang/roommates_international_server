@@ -1,0 +1,12 @@
+{
+  "dev": {
+    "host": { "ENV": "PGHOST" },
+    "user": { "ENV": "PGUSER" },
+    "database": { "ENV": "PGDATABASE" },
+    "password": { "ENV": "PGPASSWORD" },
+    "port": { "ENV": "PGPORT" },
+    "driver": "pg",
+    "schema": "my_schema"
+  },
+  "sql-file": true
+}
