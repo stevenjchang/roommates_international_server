@@ -6,12 +6,9 @@ const client = require("../pg.js");
 listingRouter.get("/", async (req, res) => {
   const text = "SELECT * FROM listing;";
   try {
-    await client.connect();
     const dbRes = await client.query(text);
     const result = dbRes.rows;
-    console.log("result ==>", result);
-    res.send(JSON.stringify(result));
-    client.end();
+    res.send({ result: "test" });
   } catch (err) {
     console.log("err ==>", err);
   }
