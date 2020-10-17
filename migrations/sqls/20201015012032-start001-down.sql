@@ -1,1 +1,1 @@
-DROP TABLE test;
+DROP TABLE account, listing, listing_category, listing_detail;
