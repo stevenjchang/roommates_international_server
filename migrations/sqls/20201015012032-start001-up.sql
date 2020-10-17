@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS account (
 );
 CREATE TABLE IF NOT EXISTS listing_category (
   id serial PRIMARY KEY,
-  listing_name text
+  category_name text
 );
 CREATE TABLE IF NOT EXISTS listing_detail (
   id serial PRIMARY KEY,
@@ -20,8 +20,16 @@ CREATE TABLE IF NOT EXISTS listing_detail (
 );
 CREATE TABLE IF NOT EXISTS listing (
   id serial PRIMARY KEY,
+  title text,
+  summary text,
   account_id int REFERENCES account (id),
   category_id int REFERENCES listing_category (id),
   listing_detail_id int REFERENCES listing_detail (id)
 );
+
+INSERT INTO listing_category (category_name)
+VALUES 
+  ('house'),
+  ('apartment')
+  ;
 

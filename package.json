@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/stevenjchang/roommates_international_server#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "db-migrate": "^0.11.11",
     "db-migrate-pg": "^1.2.2",
     "dotenv": "^8.2.0",
