@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS account (
   username text UNIQUE NOT NULL,
   email text UNIQUE,
   display_name text,
-  created_at TIMESTAMP NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   last_login TIMESTAMP
 );
 CREATE TABLE IF NOT EXISTS listing_category (
@@ -27,9 +27,16 @@ CREATE TABLE IF NOT EXISTS listing (
   listing_detail_id int REFERENCES listing_detail (id)
 );
 
+INSERT INTO account (username, email, display_name)
+VALUES
+  ('user1', 'email1@test.com', 'Joe Burrow'),
+  ('user2', 'email2@test.com', 'Josh Jacobs'),
+  ('user3', 'email3@test.com', 'Joe Mixon')
+;
+
 INSERT INTO listing_category (category_name)
 VALUES 
   ('house'),
   ('apartment')
-  ;
+;
 
