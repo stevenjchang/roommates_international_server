@@ -1,8 +1,8 @@
 const express = require("express");
-const listingRouter = express.Router();
+const router = express.Router();
 const client = require("../pg.js");
 
-listingRouter.get("/", async (req, res) => {
+router.get("/all", async (req, res) => {
   const text = "SELECT * FROM listing;";
   try {
     const dbRes = await client.query(text);
@@ -13,7 +13,19 @@ listingRouter.get("/", async (req, res) => {
   }
 });
 
-listingRouter.post("/", async (req, res) => {
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  const text = "SELECT * FROM listing WHERE id = $1";
+  const values = [id];
+  try {
+    const dbRes = await client.query(text, values);
+    res.send({ result: dbRes.rows });
+  } catch (err) {
+    console.log("Error ==>", err);
+  }
+});
+
+router.post("/", async (req, res) => {
   const { title, summary } = req.body;
   const text =
     "INSERT INTO listing (title, summary) VALUES ($1, $2) RETURNING *";
@@ -29,4 +41,4 @@ listingRouter.post("/", async (req, res) => {
   }
 });
 
-module.exports = listingRouter;
+module.exports.listingRouter = router;

@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 8080;
 const pgInstance = require("./pg.js");
 
 const { accountRouter } = require("./routes/account.js");
-const listingRouter = require("./routes/listings.js");
+const { listingRouter } = require("./routes/listings.js");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

@@ -3,6 +3,8 @@ node_modules
 .env.development
 .env.test
 logs
+
 NOTES.md
+TODO.md
 
 sql-playground.sql
