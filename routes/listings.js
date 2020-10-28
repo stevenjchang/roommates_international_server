@@ -3,9 +3,22 @@ const router = express.Router();
 const client = require("../pg.js");
 
 router.get("/all", async (req, res) => {
-  const text = "SELECT * FROM listing;";
+  const {
+    price_min = 1,
+    price_max = 9999999,
+    shared_room = null,
+    shared_house = null,
+  } = req.query;
+  const text = `SELECT * FROM listing 
+    INNER JOIN listing_attribute as A 
+    USING (listing_id) 
+    WHERE (A.price > $1) 
+    AND (A.price < $2) 
+    AND (A.shared_room = $3 OR $3 IS NULL) 
+    AND (A.shared_house = $4 OR $4 IS NULL)`;
+  const values = [price_min, price_max, shared_room, shared_house];
   try {
-    const dbRes = await client.query(text);
+    const dbRes = await client.query(text, values);
     const result = dbRes.rows;
     res.send({ result });
   } catch (err) {
