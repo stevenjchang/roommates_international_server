@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const client = require("../pg.js");
+const client = require("../../pg.js");
+const { commentRouter } = require("./comment/index.js");
+
+router.use("/comment", commentRouter);
 
 router.get("/all", async (req, res) => {
   const {

@@ -36,6 +36,29 @@ CREATE TABLE IF NOT EXISTS listing_attribute (
   listing_id int REFERENCES listing (listing_id)
 );
 
+CREATE TABLE IF NOT EXISTS comment (
+  comment_id serial PRIMARY KEY,
+  account_id int REFERENCES account (account_id),
+  listing_id int REFERENCES listing (listing_id),
+  content text,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS msg (
+  msg_id serial PRIMARY KEY,
+  msg_from int REFERENCES account (account_id),
+  msg_to int REFERENCES account (account_id),
+  msg_content text,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS user_listing_bookmark (
+  account_id int REFERENCES account (account_id),
+  listing_id int REFERENCES listing (listing_id),
+  note text,
+  is_active boolean
+);
+
 INSERT INTO
   account (username, email, first_name, last_name)
 VALUES
@@ -108,3 +131,10 @@ VALUES
   (2, 4, 1000, true, true),
   (3, 1, 1800, false, false),
   (4, 3, 1500, false, true);
+
+INSERT INTO
+  comment (account_id, listing_id, content)
+VALUES
+  (1, 1, 'How many bathrooms?'),
+  (2, 1, 'Is it near public transit?'),
+  (3, 1, 'Are pets allowed?');

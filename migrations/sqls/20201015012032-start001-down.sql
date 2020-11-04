@@ -1,5 +1,7 @@
 DROP TABLE IF EXISTS account,
 listing,
 listing_category,
-listing_detail,
-listing_attribute;
+listing_attribute,
+comment,
+msg,
+user_listing_bookmark;
