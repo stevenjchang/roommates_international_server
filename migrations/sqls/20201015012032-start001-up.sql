@@ -2,6 +2,7 @@ CREATE TABLE IF NOT EXISTS account (
   account_id serial PRIMARY KEY,
   username text UNIQUE NOT NULL,
   email text UNIQUE,
+  password varchar(100),
   first_name text,
   last_name text,
   country_code text,
@@ -47,9 +48,11 @@ CREATE TABLE IF NOT EXISTS comment (
 CREATE TABLE IF NOT EXISTS msg (
   msg_id serial PRIMARY KEY,
   msg_from int REFERENCES account (account_id),
+  -- sender_id
   msg_to int REFERENCES account (account_id),
+  -- receiver_id
   msg_content text,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- msg_type, status, message
 );
 
 CREATE TABLE IF NOT EXISTS user_listing_bookmark (

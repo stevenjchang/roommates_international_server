@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const client = require("../pg.js");
+const client = require("../../pg.js");
 
 router.get("/all", async (req, res) => {
   const text = "SELECT * FROM account;";
