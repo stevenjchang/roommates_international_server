@@ -3,11 +3,10 @@ const router = express.Router();
 const client = require("../../pg.js");
 const { Account } = require("../../models");
 
-router.get("/all", async (req, res) => {
-  const text = "SELECT * FROM account;";
+router.get("/allusers", async (req, res) => {
   try {
-    const dbRes = await client.query(text);
-    res.send({ result: dbRes.rows });
+    const allUsers = await Account.getAllUsers();
+    res.json(allUsers);
   } catch (err) {
     console.log("Error ==>", err);
   }
