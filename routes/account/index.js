@@ -16,7 +16,13 @@ router.get("/all", async (req, res) => {
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
   const user = await Account.findUser(id);
-  res.send({ results: user });
+  if (user.length === 1) {
+    res.json(user);
+  } else if (user.length > 1) {
+    throw new Error("duplicate user exists");
+  } else {
+    res.send("account does not exists");
+  }
 });
 
 router.post("/add", async (req, res) => {

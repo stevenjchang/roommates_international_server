@@ -39,7 +39,6 @@ require("./middleware/passport.js")(passport);
 // Routes
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
-    console.log("user ==>", user);
     if (err) throw err;
     if (!user) res.send("No user found");
     req.logIn(user, (err) => {
