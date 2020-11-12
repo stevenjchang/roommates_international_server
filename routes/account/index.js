@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const client = require("../../pg.js");
+const { Account } = require("../../models");
 
 router.get("/all", async (req, res) => {
   const text = "SELECT * FROM account;";
@@ -14,14 +15,8 @@ router.get("/all", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
-  const text = "SELECT * FROM account WHERE id = $1";
-  const values = [id];
-  try {
-    const dbRes = await client.query(text, values);
-    res.send({ result: dbRes.rows });
-  } catch (err) {
-    console.log("Error ==>", err);
-  }
+  const user = await Account.findUser(id);
+  res.send({ results: user });
 });
 
 router.post("/add", async (req, res) => {

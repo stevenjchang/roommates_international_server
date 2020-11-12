@@ -1,7 +1,38 @@
+const passport = require("passport");
 const bcrypt = require("bcryptjs");
 const LocalStrategy = require("passport-local").Strategy;
+const client = require("../pg.js");
 
-const client = require("./pg.js");
+passport.serializeUser((profile, done) => {
+  done(null, profile.id);
+});
+
+passport.deserializeUser((account_id, cb) => {
+  const text = `
+  SELECT * FROM account
+  WHERE account_id = $1
+`;
+  const values = [account_id];
+  client
+    .query(text, values)
+    .then((res) => {
+      const data = res.rows[0];
+      cb(null, data);
+    })
+    .catch((err) => {
+      cb(err);
+    });
+});
+
+passport.use(
+  "local-signup",
+  new LocalStrategy(
+    {
+      passReqToCallback: true,
+    },
+    (req, username, password, done) => {}
+  )
+);
 
 module.exports = function (passport) {
   passport.use(
@@ -50,24 +81,3 @@ module.exports = function (passport) {
       });
   });
 };
-
-/** 
-Node/Javascript question:
-
-I always a little confused when I see a require that isn't assigned to something
-
-so in the code
-
-app.js 
-```
-const passport = require("passport");
-
-app.use(passport.initialize());
-app.use(passport.session());
-require("./passportConfig.js")(passport);
-
-passport.authenticate('local', (err, user, info))
-```
-
-it catches me by surprise that the require("./passportConfig.js") line effects the passport in the remainer of the app.js file. At this point, I understand why, it just catches me off guard
-*/
