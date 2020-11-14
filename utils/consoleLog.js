@@ -10,11 +10,15 @@ String.prototype.nthLastIndexOf = function (searchString, n) {
   return url.lastIndexOf(searchString, url.nthLastIndexOf(searchString, n) - 1);
 };
 
+// error can be 'string' or error object
 exports.logError = (fileName, error) => {
+  const errorMessage = typeof error === "string" ? error : error.message;
   const shortFileName = fileName.slice(
     fileName.nthLastIndexOf("/", 2),
     fileName.length
   );
+  console.log("");
   console.log("*** Error in:", shortFileName);
-  console.log("*** Error message:", error.message);
+  console.log("*** Error message:", errorMessage);
+  console.log("");
 };

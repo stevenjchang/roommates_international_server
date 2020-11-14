@@ -37,7 +37,6 @@ exports.findIfUserExists = async (username, email) => {
   const values = [username, email];
   try {
     const queryResult = await client.query(findIfUserExistsQuery, values);
-    // console.log("queryResult ==>", queryResult);
     return cleanQueryData(queryResult);
   } catch (err) {
     logError(__filename, err);

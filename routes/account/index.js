@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const client = require("../../pg.js");
+const { logError } = require("../../utils/consoleLog");
 const { Account } = require("../../models");
 
 router.get("/allusers", async (req, res) => {
@@ -8,7 +8,7 @@ router.get("/allusers", async (req, res) => {
     const allUsers = await Account.getAllUsers();
     res.json(allUsers);
   } catch (err) {
-    console.log("Error ==>", err);
+    logError(__filename, err);
   }
 });
 
@@ -18,7 +18,7 @@ router.get("/:id", async (req, res) => {
   if (user.length === 1) {
     res.json(user);
   } else if (user.length > 1) {
-    throw new Error("duplicate user exists");
+    logError(__filename, "duplicate user exists");
   } else {
     res.send("account does not exists");
   }
@@ -28,7 +28,6 @@ router.post("/createuser", async (req, res) => {
   const { email } = req.body;
   try {
     const existingUser = await Account.findUserByEmail(email);
-    console.log("existingUser ==>", existingUser);
     if (existingUser.length === 0) {
       const newUserInfo = await Account.createUser(req.body);
       if (newUserInfo.name === "error") {
@@ -42,7 +41,7 @@ router.post("/createuser", async (req, res) => {
       );
     }
   } catch (err) {
-    console.log("err ==>", err);
+    logError(__filename, err);
   }
 });
 
