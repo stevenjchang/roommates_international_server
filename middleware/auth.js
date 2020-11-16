@@ -1,6 +1,6 @@
 const expressSession = require("express-session");
 const env = process.env.NODE_ENV || "development";
-const config = require("./config/")[env];
+const config = require("../config")[env];
 
 module.exports.verify = (req, res, next) => {
   if (req.isAuthenticated()) {
