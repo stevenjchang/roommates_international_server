@@ -63,7 +63,6 @@ router.post("/register", async (req, res) => {
   });
 });
 router.get("/user", (req, res) => {
-  console.log("res.body ==>", req.user);
   res.send(req.user);
 });
 

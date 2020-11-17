@@ -17,8 +17,12 @@ exports.logError = (fileName, error) => {
     fileName.nthLastIndexOf("/", 2),
     fileName.length
   );
-  console.log("");
-  console.log("*** Error in:", shortFileName);
-  console.log("*** Error message:", errorMessage);
-  console.log("");
+  console.log(
+    "\n",
+    "*** Error in:",
+    shortFileName,
+    "*** Error message:",
+    errorMessage,
+    "\n"
+  );
 };

@@ -6,12 +6,10 @@ const client = require("../pg.js");
 const Account = require("../models/account");
 
 passport.serializeUser((profile, done) => {
-  console.log("serializeUser ==>");
   return done(null, profile.account_id);
 });
 
 passport.deserializeUser((account_id, cb) => {
-  console.log("deserializeUser ==>");
   const text = `
   SELECT * FROM account
   WHERE account_id = $1
@@ -40,7 +38,6 @@ passport.use(
       try {
         const result = await Account.findUserByEmail(email);
         if (result.length === 1) {
-          console.log("result ==>", result[0]);
           return done(null, result[0]);
         } else {
           return done(null, false);
