@@ -31,7 +31,7 @@ router.get("/all", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
-  const text = "SELECT * FROM listing WHERE id = $1";
+  const text = "SELECT * FROM listing WHERE listing_id = $1";
   const values = [id];
   try {
     const dbRes = await client.query(text, values);

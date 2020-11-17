@@ -9,7 +9,6 @@ module.exports = {
     port: process.env.PGPORT,
   },
   session: {
-    sessionSecret: process.env.SESSION_SECRET_DEV,
+    sessionSecret: process.env.SESSION_SECRET,
   },
-  port: process.env.PORT || 8080,
 };

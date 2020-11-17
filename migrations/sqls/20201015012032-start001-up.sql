@@ -2,6 +2,7 @@ CREATE TABLE IF NOT EXISTS account (
   account_id serial PRIMARY KEY,
   username text UNIQUE NOT NULL,
   email text UNIQUE,
+  password varchar(100),
   first_name text,
   last_name text,
   country_code text,
@@ -47,9 +48,11 @@ CREATE TABLE IF NOT EXISTS comment (
 CREATE TABLE IF NOT EXISTS msg (
   msg_id serial PRIMARY KEY,
   msg_from int REFERENCES account (account_id),
+  -- sender_id
   msg_to int REFERENCES account (account_id),
+  -- receiver_id
   msg_content text,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- msg_type, status, message
 );
 
 CREATE TABLE IF NOT EXISTS user_listing_bookmark (
@@ -58,83 +61,3 @@ CREATE TABLE IF NOT EXISTS user_listing_bookmark (
   note text,
   is_active boolean
 );
-
-INSERT INTO
-  account (username, email, first_name, last_name)
-VALUES
-  ('user1', 'email1@test.com', 'Joe', 'Burrow'),
-  ('user2', 'email2@test.com', 'Josh', 'Jacobs'),
-  ('user3', 'email3@test.com', 'Joe', 'Mixon');
-
-INSERT INTO
-  listing_category (category_name)
-VALUES
-  ('house'),
-  ('apartment');
-
-INSERT INTO
-  listing (title, summary, account_id, category_id)
-VALUES
-  (
-    '2 bedroom near park',
-    'Been looking for a 2BR home (all upstairs) in False Creek? You have just found it. Located at the end of a quiet hillside cul de sac, this 1960 built 2BR, 1 bath 1 owner home has been beautifully maintained and offers excellent privacy with no neighbours to the north and west.',
-    1,
-    2
-  ),
-  (
-    '4 bedroom near bart',
-    'Brand new, modern home with HEAT PUMP!! Kitchen has eating bar w/gorgeous floor to ceilings windows to allow plenty of natural lighting.',
-    2,
-    1
-  ),
-  (
-    '1 bedroom in-law unit',
-    'Very affordable Gastown border cottage with separate studio guest suite is a sanctuary. Immaculate south facing 1BR, 1 bath corner suite in the community of Mouat Park. Secure parking and additional storage in a downtown concrete building, this home delivers the very best of warm,period charm & superior upgrading. Walking distance to everything.',
-    3,
-    1
-  ),
-  (
-    '3 bedroom near park',
-    'Very affordable Gastown border cottage with separate studio guest suite is a sanctuary. Immaculate south facing 1BR, 1 bath corner suite in the community of Mouat Park. Secure parking and additional storage in a downtown concrete building, this home delivers the very best of warm,period charm & superior upgrading. Walking distance to everything.',
-    2,
-    1
-  ),
-  (
-    '4 bedroom near bart',
-    'Very affordable Gastown border cottage with separate studio guest suite is a sanctuary. Immaculate south facing 1BR, 1 bath corner suite in the community of Mouat Park. Secure parking and additional storage in a downtown concrete building, this home delivers the very best of warm,period charm & superior upgrading. Walking distance to everything.',
-    2,
-    1
-  ),
-  (
-    '4 bedroom near bart',
-    'Very affordable Gastown border cottage with separate studio guest suite is a sanctuary. Immaculate south facing 1BR, 1 bath corner suite in the community of Mouat Park. Secure parking and additional storage in a downtown concrete building, this home delivers the very best of warm,period charm & superior upgrading. Walking distance to everything.',
-    2,
-    1
-  ),
-  (
-    '4 bedroom near bart',
-    'Very affordable Gastown border cottage with separate studio guest suite is a sanctuary. Immaculate south facing 1BR, 1 bath corner suite in the community of Mouat Park. Secure parking and additional storage in a downtown concrete building, this home delivers the very best of warm,period charm & superior upgrading. Walking distance to everything.',
-    2,
-    1
-  );
-
-INSERT INTO
-  listing_attribute (
-    listing_id,
-    total_bedrooms,
-    price,
-    shared_room,
-    shared_house
-  )
-VALUES
-  (1, 2, 1200, false, true),
-  (2, 4, 1000, true, true),
-  (3, 1, 1800, false, false),
-  (4, 3, 1500, false, true);
-
-INSERT INTO
-  comment (account_id, listing_id, content)
-VALUES
-  (1, 1, 'How many bathrooms?'),
-  (2, 1, 'Is it near public transit?'),
-  (3, 1, 'Are pets allowed?');
