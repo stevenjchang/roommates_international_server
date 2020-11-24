@@ -11,8 +11,9 @@ String.prototype.nthLastIndexOf = function (searchString, n) {
 };
 
 // error can be 'string' or error object
-exports.logError = (fileName, error) => {
-  const errorMessage = typeof error === "string" ? error : error.message;
+exports.logError = (fileName, error, customMsg) => {
+  const errorMessage =
+    typeof error === "string" ? error : !error ? "no message" : error.message;
   const shortFileName = fileName.slice(
     fileName.nthLastIndexOf("/", 2),
     fileName.length
@@ -21,6 +22,7 @@ exports.logError = (fileName, error) => {
     "\n",
     "*** Error in:",
     shortFileName,
+    "\n",
     "*** Error message:",
     errorMessage,
     "\n"

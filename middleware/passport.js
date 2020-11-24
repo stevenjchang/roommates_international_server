@@ -1,9 +1,10 @@
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
-const { logError } = require("../utils/consoleLog");
+
 const LocalStrategy = require("passport-local").Strategy;
 const client = require("../pg.js");
 const Account = require("../models/account");
+const { logError } = require("../utils/consoleLog");
 
 passport.serializeUser((profile, done) => {
   return done(null, profile.account_id);
