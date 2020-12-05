@@ -30,11 +30,11 @@ const setCorsHeaders = (req, res, next) => {
 
 // Middlewear
 app.use(cookieParser(config.session.sessionSecret));
-app.use(expressSession);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(setCorsHeaders);
 app.use(flash());
+app.use(expressSession);
 app.use(passport.initialize());
 app.use(passport.session());
 // require("./middleware/passport.js")(passport);

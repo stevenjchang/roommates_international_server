@@ -10,8 +10,22 @@ router.route("/login").post((req, res, next) => {
       logError(__filename, err);
       res.json(info);
     }
-    res.json(user);
+    //see NOTES.md - req.logIn is needed
+    req.logIn(user, function (err2) {
+      if (err2) {
+        console.log("err ==>", err);
+        return;
+      }
+      res.send("you made it");
+    });
+    // res.cookie("cookie_thing", { test: "abc" }, { maxAge: 300000 });
+    // res.json(user);
   })(req, res, next);
+});
+
+router.route("/verify").get(middleware.auth.verify, (req, res) => {
+  console.log("*********************** ==>");
+  res.send("success");
 });
 
 router.get((req, res) => {
