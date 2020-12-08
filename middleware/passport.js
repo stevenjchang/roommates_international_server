@@ -7,24 +7,17 @@ const Account = require("../models/account");
 const { logError } = require("../utils/consoleLog");
 
 passport.serializeUser((profile, done) => {
+  console.log("serializeUser ==>");
   return done(null, profile.account_id);
 });
 
-passport.deserializeUser((account_id, cb) => {
-  const text = `
-  SELECT * FROM account
-  WHERE account_id = $1
-`;
-  const values = [account_id];
-  client
-    .query(text, values)
-    .then((res) => {
-      const data = res.rows[0];
-      return cb(null, data);
-    })
-    .catch((err) => {
-      return cb(err);
-    });
+passport.deserializeUser(async (account_id, cb) => {
+  console.log("deserializeUser ==>");
+  const user = await Account.findUserById(account_id);
+  if (!user) {
+    cb("error in deserializeUser");
+  }
+  cb(null, user);
 });
 
 passport.use(

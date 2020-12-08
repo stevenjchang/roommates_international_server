@@ -13,19 +13,20 @@ router.route("/login").post((req, res, next) => {
     //see NOTES.md - req.logIn is needed
     req.logIn(user, function (err2) {
       if (err2) {
-        console.log("err ==>", err);
+        console.log("req.LogIn error ==>", err);
         return;
       }
-      res.send("you made it");
+      res.send(user);
     });
-    // res.cookie("cookie_thing", { test: "abc" }, { maxAge: 300000 });
-    // res.json(user);
   })(req, res, next);
 });
 
-router.route("/verify").get(middleware.auth.verify, (req, res) => {
-  console.log("*********************** ==>");
-  res.send("success");
+router.route("/verify").get((req, res) => {
+  if (req.isAuthenticated()) {
+    res.send(req.user);
+  } else {
+    console.log("Something went wrong in auth/verify ==>");
+  }
 });
 
 router.get((req, res) => {

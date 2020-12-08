@@ -54,7 +54,14 @@ exports.getAllUsers = async () => {
 exports.findUserById = async (id) => {
   try {
     const queryResult = await client.query(findUserByIdQuery, [id]);
-    return cleanQueryData(queryResult);
+    const usersArray = cleanQueryData(queryResult);
+
+    if (!usersArray || usersArray.length === 0) {
+      return { error: "account or password combo does not exist" };
+    } else if (usersArray.length > 1) {
+      return { error: "duplicate user exists" };
+    }
+    return { error: null, user: usersArray[0] };
   } catch (err) {
     logError(__filename, err);
     return err;
