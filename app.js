@@ -17,7 +17,7 @@ const router = express.Router();
 const { accountRouter } = require("./routes/account/index.js");
 const { listingRouter } = require("./routes/listing/index.js");
 const { authRouter } = require("./routes");
-const { Account } = require("./models/");
+const { Account, Listing } = require("./models/");
 
 // const cors = require('cors')
 const setCorsHeaders = (req, res, next) => {
@@ -93,11 +93,17 @@ const typeDefs = gql`
     title: String
     author: String
   }
-
   type Account {
     account_id: Int
     username: String!
     email: String
+  }
+  type Listing {
+    listing_id: Int
+    title: String
+    summary: String
+    account_id: Int
+    category_id: Int
   }
 
   # The "Query" type is special: it lists all of the available queries that
@@ -107,6 +113,8 @@ const typeDefs = gql`
     books: [Book]
     accounts: [Account]
     account(account_id: Int, email: String): Account
+    listings: [Listing]
+    listing(listing_id: Int): Listing
   }
 `;
 
@@ -139,6 +147,15 @@ const resolvers = {
         const queryResult = await Account.findUserByEmail(email);
         return queryResult[0];
       }
+    },
+    listings: async (_, args) => {
+      const dbResult = await Listing.getAllListings(args);
+      return dbResult;
+    },
+    listing: async (_, { listing_id }) => {
+      const dbResult = await Listing.getListingById({ listing_id });
+      console.log("dbResult ==>", dbResult);
+      return dbResult[0];
     },
   },
 };
