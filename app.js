@@ -17,6 +17,8 @@ const router = express.Router();
 const { accountRouter } = require("./routes/account/index.js");
 const { listingRouter } = require("./routes/listing/index.js");
 const { authRouter } = require("./routes");
+const { Account } = require("./models/");
+
 // const cors = require('cors')
 const setCorsHeaders = (req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
@@ -78,6 +80,79 @@ app.use("/listing", listingRouter);
 
 app.use("/", router);
 
+const { ApolloServer, gql } = require("apollo-server");
+
+// A schema is a collection of type definitions (hence "typeDefs")
+// that together define the "shape" of queries that are executed against
+// your data.
+const typeDefs = gql`
+  # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
+
+  # This "Book" type defines the queryable fields for every book in our data source.
+  type Book {
+    title: String
+    author: String
+  }
+
+  type Account {
+    account_id: Int
+    username: String!
+    email: String
+  }
+
+  # The "Query" type is special: it lists all of the available queries that
+  # clients can execute, along with the return type for each. In this
+  # case, the "books" query returns an array of zero or more Books (defined above).
+  type Query {
+    books: [Book]
+    accounts: [Account]
+    account(account_id: Int, email: String): Account
+  }
+`;
+
+const books = [
+  {
+    title: "The Awakening",
+    author: "Kate Chopin",
+  },
+  {
+    title: "City of Glass",
+    author: "Paul Auster",
+  },
+];
+
+// Resolvers define the technique for fetching the types defined in the
+// schema. This resolver retrieves books from the "books" array above.
+const resolvers = {
+  Query: {
+    books: () => books,
+    accounts: async () => {
+      const users = await Account.getAllUsers();
+      return users;
+    },
+    account: async (parent, args, context, info) => {
+      const { account_id, email } = args;
+      if (account_id) {
+        const queryResult = await Account.findUserById(account_id);
+        return queryResult.user;
+      } else {
+        const queryResult = await Account.findUserByEmail(email);
+        return queryResult[0];
+      }
+    },
+  },
+};
+
+// The ApolloServer constructor requires two parameters: your schema
+// definition and your set of resolvers.
+const server = new ApolloServer({ typeDefs, resolvers });
+
+// apollo graphql server, port 4000
+server.listen().then(({ url }) => {
+  console.log(`🚀  Server ready at ${url}`);
+});
+
+//express server, port 8080
 app.listen(config.port, () => {
   console.log("listening on PORT:", config.port);
 });
