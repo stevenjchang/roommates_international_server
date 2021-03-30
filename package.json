@@ -15,6 +15,7 @@
     "type": "git",
     "url": "git+https://github.com/stevenjchang/roommates_international_server.git"
   },
+  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
