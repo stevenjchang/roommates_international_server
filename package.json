@@ -4,7 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "tsc && node build/app.js",
+    "start:dev": "nodemon",
+    "build": "rm -rf ./build && tsc",
     "migrate:up": "db-migrate up --config ./config/db-migrate/dev.json",
     "migrate:down": "db-migrate down --config ./config/db-migrate/dev.json",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,6 +15,7 @@
     "type": "git",
     "url": "git+https://github.com/stevenjchang/roommates_international_server.git"
   },
+  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -37,11 +40,13 @@
     "pg": "^8.4.1"
   },
   "devDependencies": {
+    "@types/node": "^14.14.37",
     "eslint": "^7.13.0",
     "eslint-config-standard": "^16.0.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
-    "nodemon": "^2.0.5"
+    "nodemon": "^2.0.7",
+    "ts-node": "^9.1.1"
   }
 }
