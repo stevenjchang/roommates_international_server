@@ -1,6 +1,6 @@
 import { query } from "./query";
-import { bookType } from "./types";
+import { accountType, bookType, listingType } from "./types";
 
-const typeDefs = [query, bookType];
+const typeDefs = [query, accountType, bookType, listingType];
 
 export { typeDefs };

@@ -1,0 +1,1 @@
+{"version":3,"file":"bookResolvers.js","sourceRoot":"","sources":["../../src/resolvers/bookResolvers.ts"],"names":[],"mappings":";;;AAAA,sCAAiC;AAEjC,MAAM,cAAc,GAAG;IACrB,KAAK,EAAE;QACL,KAAK,EAAE,GAAG,EAAE,CAAC,aAAI,CAAC,GAAG,EAAE;KACxB;CACF,CAAC;AAEO,wCAAc"}

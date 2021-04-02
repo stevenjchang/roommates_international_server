@@ -15,7 +15,6 @@
     "type": "git",
     "url": "git+https://github.com/stevenjchang/roommates_international_server.git"
   },
-  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -37,10 +36,11 @@
     "graphql": "^15.5.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
-    "pg": "^8.4.1"
+    "pg": "^8.2.0"
   },
   "devDependencies": {
     "@types/node": "^14.14.37",
+    "@types/pg": "^7.14.11",
     "eslint": "^7.13.0",
     "eslint-config-standard": "^16.0.1",
     "eslint-plugin-import": "^2.22.1",
